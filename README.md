@@ -13,7 +13,7 @@ An `<SVG>` wrapper component that makes inline `<svg>` work in [Preact].
 
 ```js
 import SVG from 'preact-svg';
-import { h } from 'preact';
+import { h, render } from 'preact';
 /** @jsx h */
 
 const Main = () => (
