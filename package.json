@@ -1,6 +1,6 @@
 {
   "name": "preact-svg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Use SVG with Preact.",
   "main": "dist/preact-svg.js",
   "scripts": {
