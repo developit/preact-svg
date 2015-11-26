@@ -27,7 +27,7 @@ const ATTRS = DOM ? ['width', 'height', 'viewBox', 'preserveAspectRatio'] : [];
 /** Wrapper around <svg> that provides Preact support.
  *	@public
  */
-class SVG extends Component {
+export default class SVG extends Component {
 	componentWillUpdate() {
 		updateMode = true;
 	}
