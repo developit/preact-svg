@@ -5,7 +5,9 @@
 
 An `<SVG>` wrapper component that makes inline `<svg>` work in [Preact].
 
-**[CodePen Demo](http://codepen.io/developit/pen/ZbPdem?editors=001)**
+> **[CodePen Demo](http://codepen.io/developit/pen/ZbPdem?editors=001)**
+>
+> ![preact-svg](https://i.gyazo.com/df0bcc29e36ee107352600679e537176.gif)
 
 ---
 
