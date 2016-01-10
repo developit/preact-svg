@@ -1,7 +1,7 @@
 # preact-svg
 
 [![NPM](http://img.shields.io/npm/v/preact-svg.svg)](https://www.npmjs.com/package/preact-svg)
-[![travis-ci](https://travis-ci.org/developit/preact-svg.svg)](https://travis-ci.org/developit/preact-svg)
+[![travis-ci](https://travis-ci.org/developit/preact-svg.svg?branch=master)](https://travis-ci.org/developit/preact-svg)
 
 An `<SVG>` wrapper component that makes inline `<svg>` work in [Preact].
 
