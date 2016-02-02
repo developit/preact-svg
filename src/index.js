@@ -25,7 +25,10 @@ if (DOM) {
 			let el = document.createElementNS('http://www.w3.org/2000/svg', name);
 			for (let i in el) {
 				if (!(i in div) || PROP_TO_ATTR_MAP.hasOwnProperty(i)) {
-					Object.defineProperty(el, i, contentPropertyDef(i));
+					try {
+						Object.defineProperty(el, i, contentPropertyDef(i));
+					}
+					catch (e) {}
 				}
 			}
 			return el;
