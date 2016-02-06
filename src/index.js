@@ -74,6 +74,9 @@ export default class SVG extends Component {
 		// thankfully, first render() does synchronous DOM generation so it works fine.
 		if (!this.hasRendered) {
 			this.hasRendered = updateMode = true;
+			// componentDidUpdate() is not called after initial render,
+			// so we use a setState() callback to call it manually:
+			this.setState({}, this.componentDidUpdate);
 		}
 
 		return <svg version="1.1" xmlns="http://www.w3.org/2000/svg" {...props}>{ children }</svg>;
