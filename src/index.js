@@ -2,9 +2,13 @@ import { h, Component } from 'preact';
 
 const DOM = typeof document!=='undefined' && !!document.createElement;
 
+const SVG_ATTRS = ['viewBox'];
+
 const PROP_TO_ATTR_MAP = {
 	'className': 'class'
-}
+};
+
+const EMPTY = {};
 
 
 /** During <SVG> DOM building, this flag is set to `true`.
@@ -23,18 +27,46 @@ if (DOM) {
 	document.createElement = name => {
 		if (updateMode || name==='svg') {
 			let el = document.createElementNS('http://www.w3.org/2000/svg', name);
-			for (let i in el) {
-				if (!(i in div) || PROP_TO_ATTR_MAP.hasOwnProperty(i)) {
-					try {
-						Object.defineProperty(el, i, contentPropertyDef(i));
-					}
-					catch (e) {}
+			for (let key in el) {
+				if (~SVG_ATTRS.indexOf(key) || !(key in div) || PROP_TO_ATTR_MAP.hasOwnProperty(key)) {
+					overwriteProperty(el, key);
 				}
 			}
 			return el;
 		}
 		return oldCreate.call(document, name);
 	};
+}
+
+
+const PROPERTY_ERRORS = {};
+let hasPropertyErrors = false;
+
+function overwriteProperty(el, key) {
+	let err = PROPERTY_ERRORS[key];
+	if (err===false) {
+		Object.defineProperty(el, key, contentPropertyDef(key));
+	}
+	else {
+		attemptOverwriteProperty(el, key);
+	}
+}
+
+function attemptOverwriteProperty(el, key) {
+	try {
+		Object.defineProperty(el, key, contentPropertyDef(key));
+		PROPERTY_ERRORS[key] = false;
+	}
+	catch (e) {
+		if (!PROPERTY_ERRORS[key]) {
+			let err = el.nodeName+': '+e;
+			PROPERTY_ERRORS[key] = err;
+			if (!hasPropertyErrors && 'undefined'!==typeof console && console.warn) {
+				hasPropertyErrors = true;
+				console.warn('Error overwriting some SVG properties.', { errors: PROPERTY_ERRORS });
+			}
+		}
+	}
 }
 
 
@@ -67,6 +99,14 @@ export default class SVG extends Component {
 	// after any update, manually apply exempted readOnly SVG properties as attributes:
 	componentDidUpdate() {
 		updateMode = false;
+
+		if (this.base) {
+			for (let i in this.props) {
+				if (~SVG_ATTRS.indexOf(i) || PROPERTY_ERRORS.hasOwnProperty(i) && PROPERTY_ERRORS[i]!==false) {
+					this.base.setAttribute(i, this.props[i]);
+				}
+			}
+		}
 	}
 
 	render({ children, ...props }) {
@@ -76,9 +116,23 @@ export default class SVG extends Component {
 			this.hasRendered = updateMode = true;
 			// componentDidUpdate() is not called after initial render,
 			// so we use a setState() callback to call it manually:
-			this.setState({}, this.componentDidUpdate);
+			this.setState(EMPTY, setStateUpdateProxy(this));
+		}
+
+		for (let i in props) {
+			if (~SVG_ATTRS.indexOf(i) || PROPERTY_ERRORS.hasOwnProperty(i) && PROPERTY_ERRORS[i]!==false) {
+				delete props[i];
+			}
 		}
 
 		return <svg version="1.1" xmlns="http://www.w3.org/2000/svg" {...props}>{ children }</svg>;
 	}
+}
+
+
+function setStateUpdateProxy(component) {
+	return () => {
+		component.componentDidUpdate();
+		component = null;
+	};
 }
