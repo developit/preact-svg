@@ -4,6 +4,12 @@ const DOM = typeof document!=='undefined' && !!document.createElement;
 
 const SVG_ATTRS = ['viewBox'];
 
+const NS = {
+	xlink: 'http://www.w3.org/1999/xlink'
+}
+
+const NS_ATTR = /^([a-zA-Z]+)(?:\:|([A-Z]))/;
+
 const PROP_TO_ATTR_MAP = {
 	'className': 'class'
 };
@@ -27,6 +33,10 @@ if (DOM) {
 	document.createElement = name => {
 		if (updateMode || name==='svg') {
 			let el = document.createElementNS('http://www.w3.org/2000/svg', name);
+			// shim setAttribute to automatically apply namespaces
+			el.setAttribute = createAttributeShim('setAttribute');
+			el.getAttribute = createAttributeShim('getAttribute');
+			el.removeAttribute = createAttributeShim('removeAttribute');
 			for (let key in el) {
 				if (~SVG_ATTRS.indexOf(key) || !(key in div) || PROP_TO_ATTR_MAP.hasOwnProperty(key)) {
 					overwriteProperty(el, key);
@@ -86,6 +96,21 @@ let contentPropertyDef = memoize( (prop, attr=(PROP_TO_ATTR_MAP[prop] || prop)) 
 	},
 	get() { return this.getAttribute(attr); }
 }) );
+
+
+let createAttributeShim = memoize( method => function(name, value) {
+	let proto = this.constructor.prototype,
+		p = name.match(NS_ATTR);
+	if (p && NS.hasOwnProperty(p[1])) {
+		name = name.replace(NS_ATTR, '$2').toLowerCase();
+		let ns = NS[p[1]];
+		return proto[method+'NS'].call(this, ns, name, value);
+	}
+	else {
+		return proto.setAttribute.call(this, name, value);
+	}
+});
+
 
 
 /** Wrapper around <svg> that provides Preact support.
