@@ -1,4 +1,27 @@
 {
   "parser": "babel-eslint",
-  "ignore": ["*.md"]
+  "extends": "eslint:recommended",
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    }
+  },
+  "globals": {
+    "expect": true
+  },
+  "rules": {
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "no-unused-vars": [1, { "varsIgnorePattern": "^h$" }],
+    "no-console": 1
+  }
 }

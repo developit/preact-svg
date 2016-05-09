@@ -1,9 +1,5 @@
 import SVG from '../src';
-import { h, Component } from 'preact';
-import { expect, use } from 'chai';
-import { spy, match } from 'sinon';
-import sinonChai from 'sinon-chai';
-use(sinonChai);
+import { h, render } from 'preact';
 
 describe('preact-svg', () => {
 	describe('<SVG />', () => {
