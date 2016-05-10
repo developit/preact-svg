@@ -107,7 +107,7 @@ let createAttributeShim = memoize( method => function(name, value) {
 		return proto[method+'NS'].call(this, ns, name, value);
 	}
 	else {
-		return proto.setAttribute.call(this, name, value);
+		return proto[method].call(this, name, value);
 	}
 });
 
