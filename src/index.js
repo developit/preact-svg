@@ -124,14 +124,6 @@ export default class SVG extends Component {
 	// after any update, manually apply exempted readOnly SVG properties as attributes:
 	componentDidUpdate() {
 		updateMode = false;
-
-		if (this.base) {
-			for (let i in this.props) {
-				if (~SVG_ATTRS.indexOf(i) || PROPERTY_ERRORS.hasOwnProperty(i) && PROPERTY_ERRORS[i]!==false) {
-					this.base.setAttribute(i, this.props[i]);
-				}
-			}
-		}
 	}
 
 	render({ children, ...props }) {
@@ -142,12 +134,6 @@ export default class SVG extends Component {
 			// componentDidUpdate() is not called after initial render,
 			// so we use a setState() callback to call it manually:
 			this.setState(EMPTY, setStateUpdateProxy(this));
-		}
-
-		for (let i in props) {
-			if (~SVG_ATTRS.indexOf(i) || PROPERTY_ERRORS.hasOwnProperty(i) && PROPERTY_ERRORS[i]!==false) {
-				delete props[i];
-			}
 		}
 
 		return <svg version="1.1" xmlns="http://www.w3.org/2000/svg" {...props}>{ children }</svg>;
