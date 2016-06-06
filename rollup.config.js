@@ -24,13 +24,14 @@ export default {
 			comments: false,
 			exclude: 'node_modules/**',
 			presets: [
-				'es2015-loose-rollup',
+				'es2015-minimal-rollup',
 				'stage-0',
 				'react'
 			],
 			plugins: [
-				['transform-react-jsx', { pragma:'h' }],
-				['transform-class-properties', { loose:true }]
+				['transform-es2015-classes', { loose:true }],
+				['transform-class-properties', { loose:true }],
+				['transform-react-jsx', { pragma:'h' }]
 			]
 		}),
 		nodeResolve({
