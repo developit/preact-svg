@@ -29,8 +29,6 @@ export default {
 				'react'
 			],
 			plugins: [
-				['transform-es2015-classes', { loose:true }],
-				['transform-class-properties', { loose:true }],
 				['transform-react-jsx', { pragma:'h' }]
 			]
 		}),
