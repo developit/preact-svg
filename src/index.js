@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import preact from 'preact';
+const { h, Component } = preact;
 
 const DOM = typeof document!=='undefined' && !!document.createElement;
 
