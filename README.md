@@ -1,9 +1,14 @@
+> **Notice:** `preact-svg` is deprecated and obsolete.
+>
+> As of Preact 5.x, SVG is now supported right out of the box, so there is no need for `preact-svg`.
+
+
 # preact-svg
 
 [![NPM](http://img.shields.io/npm/v/preact-svg.svg)](https://www.npmjs.com/package/preact-svg)
 [![travis-ci](https://travis-ci.org/developit/preact-svg.svg?branch=master)](https://travis-ci.org/developit/preact-svg)
 
-An `<SVG>` wrapper component that makes inline `<svg>` work in [Preact].
+This library provides an `<SVG>` wrapper component that makes inline `<svg>` work in [Preact] version 4 and prior.
 
 > **[CodePen Demo](http://codepen.io/developit/pen/ZbPdem?editors=001)**
 >
