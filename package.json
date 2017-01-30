@@ -72,6 +72,6 @@
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
     "uglifyjs": "^2.4.10",
-    "webpack": "^1.13.0"
+    "webpack": "^2.2.1"
   }
 }
