@@ -5,6 +5,8 @@
 
 # preact-svg
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/developit/preact-svg.svg)](https://greenkeeper.io/)
+
 [![NPM](http://img.shields.io/npm/v/preact-svg.svg)](https://www.npmjs.com/package/preact-svg)
 [![travis-ci](https://travis-ci.org/developit/preact-svg.svg?branch=master)](https://travis-ci.org/developit/preact-svg)
 
